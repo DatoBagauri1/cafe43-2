@@ -6,9 +6,10 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus];
+export type UpdateOrderStatusBodyStatus =
+  (typeof UpdateOrderStatusBodyStatus)[keyof typeof UpdateOrderStatusBodyStatus];
 
-export const OrderStatus = {
+export const UpdateOrderStatusBodyStatus = {
   pending: "pending",
   preparing: "preparing",
   ready: "ready",

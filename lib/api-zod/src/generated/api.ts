@@ -205,7 +205,7 @@ export const ListOrdersResponseItem = zod.object({
     }),
   ),
   total: zod.number(),
-  status: zod.enum(["pending", "confirmed", "ready", "delivered", "cancelled"]),
+  status: zod.enum(["pending", "preparing", "ready", "completed", "cancelled"]),
   createdAt: zod.coerce.date(),
 });
 export const ListOrdersResponse = zod.array(ListOrdersResponseItem);
@@ -229,6 +229,36 @@ export const CreateOrderBody = zod.object({
       }),
     )
     .min(1),
+});
+
+/**
+ * @summary Update order status (admin)
+ */
+export const UpdateOrderStatusParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const UpdateOrderStatusBody = zod.object({
+  status: zod.enum(["pending", "preparing", "ready", "completed", "cancelled"]),
+});
+
+export const UpdateOrderStatusResponse = zod.object({
+  id: zod.number(),
+  customerName: zod.string(),
+  phone: zod.string(),
+  address: zod.string(),
+  notes: zod.string(),
+  items: zod.array(
+    zod.object({
+      menuItemId: zod.number(),
+      name: zod.string(),
+      unitPrice: zod.number(),
+      quantity: zod.number(),
+    }),
+  ),
+  total: zod.number(),
+  status: zod.enum(["pending", "preparing", "ready", "completed", "cancelled"]),
+  createdAt: zod.coerce.date(),
 });
 
 /**

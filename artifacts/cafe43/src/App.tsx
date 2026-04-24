@@ -7,6 +7,7 @@ import { CartProvider } from "@/lib/cart";
 import { LangProvider } from "@/lib/i18n";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { CustomCursor } from "@/components/custom-cursor";
 
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
@@ -63,6 +64,7 @@ function App() {
                   <Footer />
                 </div>
               </WouterRouter>
+              <CustomCursor />
               <Toaster />
             </TooltipProvider>
           </CartProvider>

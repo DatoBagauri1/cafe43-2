@@ -242,6 +242,36 @@ paths:
               schema:
                 $ref: "#/components/schemas/Order"
 
+  /orders/{id}/status:
+    patch:
+      operationId: updateOrderStatus
+      tags: [orders]
+      summary: Update order status (admin)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [pending, preparing, ready, completed, cancelled]
+              required: [status]
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+
   /shop/status:
     get:
       operationId: getShopStatus
@@ -461,7 +491,7 @@ components:
           type: number
         status:
           type: string
-          enum: [pending, confirmed, ready, delivered, cancelled]
+          enum: [pending, preparing, ready, completed, cancelled]
         createdAt:
           type: string
           format: date-time

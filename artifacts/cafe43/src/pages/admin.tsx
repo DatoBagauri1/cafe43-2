@@ -1,6 +1,16 @@
-import { useState } from "react";
-import { useListOrders, useListMenu, useListReviews, useCreateMenuItem, useUpdateMenuItem, useDeleteMenuItem, getListMenuQueryKey } from "@workspace/api-client-react";
-import { Category, MenuItem } from "@workspace/api-client-react";
+import { useMemo, useState } from "react";
+import {
+  useListOrders,
+  useListMenu,
+  useListReviews,
+  useCreateMenuItem,
+  useUpdateMenuItem,
+  useDeleteMenuItem,
+  useUpdateOrderStatus,
+  getListMenuQueryKey,
+  getListOrdersQueryKey,
+} from "@workspace/api-client-react";
+import { Category, MenuItem, OrderStatus } from "@workspace/api-client-react";
 import { formatPrice } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -89,57 +99,178 @@ export default function Admin() {
   );
 }
 
+const STATUS_OPTIONS: OrderStatus[] = ["pending", "preparing", "ready", "completed", "cancelled"];
+
+function statusVariant(status: OrderStatus): "default" | "secondary" | "destructive" | "outline" {
+  switch (status) {
+    case "pending":
+      return "default";
+    case "preparing":
+      return "secondary";
+    case "ready":
+      return "outline";
+    case "completed":
+      return "secondary";
+    case "cancelled":
+      return "destructive";
+    default:
+      return "secondary";
+  }
+}
+
 function OrdersTab() {
   const { data: orders, isLoading } = useListOrders();
+  const [filter, setFilter] = useState<OrderStatus | "all">("all");
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
 
-  if (isLoading) return <div>Loading orders...</div>;
+  const { mutate: updateStatus } = useUpdateOrderStatus({
+    mutation: {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: getListOrdersQueryKey() });
+        toast({ title: "Order updated" });
+      },
+      onError: () => toast({ title: "Update failed", variant: "destructive" }),
+    },
+  });
+
+  const filtered = useMemo(() => {
+    if (!orders) return [];
+    return filter === "all" ? orders : orders.filter((o) => o.status === filter);
+  }, [orders, filter]);
+
+  const counts = useMemo(() => {
+    const map: Record<string, number> = { all: orders?.length || 0 };
+    for (const s of STATUS_OPTIONS) map[s] = 0;
+    for (const o of orders || []) map[o.status] = (map[o.status] || 0) + 1;
+    return map;
+  }, [orders]);
+
+  const totalRevenue = useMemo(
+    () => (orders || []).filter((o) => o.status !== "cancelled").reduce((s, o) => s + o.total, 0),
+    [orders],
+  );
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardContent className="py-12 text-center text-muted-foreground">Loading orders...</CardContent>
+      </Card>
+    );
+  }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Recent Orders</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Customer</TableHead>
-              <TableHead>Items</TableHead>
-              <TableHead>Total</TableHead>
-              <TableHead>Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {orders?.map((order) => (
-              <TableRow key={order.id}>
-                <TableCell>#{order.id}</TableCell>
-                <TableCell>{format(new Date(order.createdAt), "MMM d, HH:mm")}</TableCell>
-                <TableCell>
-                  <div className="font-medium">{order.customerName}</div>
-                  <div className="text-xs text-muted-foreground">{order.phone}</div>
-                </TableCell>
-                <TableCell>
-                  <div className="text-sm">
-                    {order.items.map(i => `${i.quantity}x ${i.name}`).join(", ")}
-                  </div>
-                </TableCell>
-                <TableCell className="font-medium">{formatPrice(order.total)}</TableCell>
-                <TableCell>
-                  <Badge variant={order.status === "pending" ? "default" : "secondary"}>
-                    {order.status}
-                  </Badge>
-                </TableCell>
-              </TableRow>
+    <div className="space-y-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <StatCard label="Total orders" value={orders?.length ?? 0} />
+        <StatCard label="Pending" value={counts.pending ?? 0} />
+        <StatCard label="Preparing" value={counts.preparing ?? 0} />
+        <StatCard label="Revenue" value={formatPrice(totalRevenue)} />
+      </div>
+
+      <Card>
+        <CardHeader className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+          <CardTitle>Orders</CardTitle>
+          <div className="flex flex-wrap gap-2">
+            {(["all", ...STATUS_OPTIONS] as const).map((s) => (
+              <button
+                key={s}
+                onClick={() => setFilter(s)}
+                className={`text-xs uppercase tracking-wider px-3 py-1.5 rounded-full border transition-colors ${
+                  filter === s
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-transparent text-muted-foreground border-border hover:bg-accent"
+                }`}
+              >
+                {s} {counts[s] ? `(${counts[s]})` : ""}
+              </button>
             ))}
-            {orders?.length === 0 && (
+          </div>
+        </CardHeader>
+        <CardContent className="overflow-x-auto">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">No orders yet</TableCell>
+                <TableHead>ID</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Customer</TableHead>
+                <TableHead className="hidden md:table-cell">Items</TableHead>
+                <TableHead>Total</TableHead>
+                <TableHead>Status</TableHead>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {filtered.map((order) => (
+                <TableRow key={order.id}>
+                  <TableCell className="font-mono">#{String(order.id).padStart(4, "0")}</TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    {format(new Date(order.createdAt), "MMM d, HH:mm")}
+                  </TableCell>
+                  <TableCell>
+                    <div className="font-medium">{order.customerName}</div>
+                    <div className="text-xs text-muted-foreground">{order.phone}</div>
+                    <div className="text-xs text-muted-foreground truncate max-w-[200px]" title={order.address}>
+                      {order.address}
+                    </div>
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    <div className="text-sm space-y-0.5">
+                      {order.items.map((i, idx) => (
+                        <div key={idx} className="flex items-center gap-2">
+                          <span className="text-muted-foreground">{i.quantity}×</span>
+                          <span>{i.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </TableCell>
+                  <TableCell className="font-medium whitespace-nowrap">{formatPrice(order.total)}</TableCell>
+                  <TableCell>
+                    <div className="flex flex-col gap-1">
+                      <Badge variant={statusVariant(order.status)} className="capitalize w-fit">
+                        {order.status}
+                      </Badge>
+                      <Select
+                        value={order.status}
+                        onValueChange={(val: OrderStatus) =>
+                          updateStatus({ id: order.id, data: { status: val } })
+                        }
+                      >
+                        <SelectTrigger className="h-8 text-xs w-[140px]">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {STATUS_OPTIONS.map((s) => (
+                            <SelectItem key={s} value={s} className="capitalize">
+                              {s}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+              {filtered.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
+                    No orders {filter !== "all" ? `with status "${filter}"` : "yet"}.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function StatCard({ label, value }: { label: string; value: number | string }) {
+  return (
+    <Card>
+      <CardContent className="pt-6">
+        <div className="text-xs uppercase tracking-wider text-muted-foreground">{label}</div>
+        <div className="mt-2 font-serif text-2xl sm:text-3xl font-bold">{value}</div>
       </CardContent>
     </Card>
   );

@@ -120,9 +120,9 @@ export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus];
 
 export const OrderStatus = {
   pending: "pending",
-  confirmed: "confirmed",
+  preparing: "preparing",
   ready: "ready",
-  delivered: "delivered",
+  completed: "completed",
   cancelled: "cancelled",
 } as const;
 
@@ -174,4 +174,19 @@ export interface ShopInfo {
 export type ListMenuParams = {
   category?: Category;
   search?: string;
+};
+
+export type UpdateOrderStatusBodyStatus =
+  (typeof UpdateOrderStatusBodyStatus)[keyof typeof UpdateOrderStatusBodyStatus];
+
+export const UpdateOrderStatusBodyStatus = {
+  pending: "pending",
+  preparing: "preparing",
+  ready: "ready",
+  completed: "completed",
+  cancelled: "cancelled",
+} as const;
+
+export type UpdateOrderStatusBody = {
+  status: UpdateOrderStatusBodyStatus;
 };

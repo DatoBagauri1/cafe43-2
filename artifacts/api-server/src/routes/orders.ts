@@ -1,7 +1,7 @@
 import { Router, type IRouter } from "express";
 import { db, ordersTable, menuItemsTable } from "@workspace/db";
-import { desc, inArray } from "drizzle-orm";
-import { CreateOrderBody } from "@workspace/api-zod";
+import { desc, eq, inArray } from "drizzle-orm";
+import { CreateOrderBody, UpdateOrderStatusBody, UpdateOrderStatusParams } from "@workspace/api-zod";
 import { serializeOrder } from "../lib/serializers";
 import type { OrderItemSnapshot } from "@workspace/db";
 
@@ -51,6 +51,23 @@ router.post("/orders", async (req, res) => {
     .returning();
 
   res.status(201).json(serializeOrder(row!));
+});
+
+router.patch("/orders/:id/status", async (req, res) => {
+  const { id } = UpdateOrderStatusParams.parse(req.params);
+  const { status } = UpdateOrderStatusBody.parse(req.body);
+
+  const [row] = await db
+    .update(ordersTable)
+    .set({ status })
+    .where(eq(ordersTable.id, id))
+    .returning();
+
+  if (!row) {
+    res.status(404).json({ message: "Order not found" });
+    return;
+  }
+  res.json(serializeOrder(row));
 });
 
 export default router;

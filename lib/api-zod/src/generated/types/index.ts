@@ -24,3 +24,5 @@ export * from "./reviewSummary";
 export * from "./shopInfo";
 export * from "./shopStatus";
 export * from "./updateMenuItemBody";
+export * from "./updateOrderStatusBody";
+export * from "./updateOrderStatusBodyStatus";
