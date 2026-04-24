@@ -24,6 +24,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
+import { USE_MOCK_API } from "@/lib/runtime-config";
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -63,6 +64,11 @@ export default function Admin() {
               />
               <Button type="submit" className="w-full">Login</Button>
             </form>
+            {USE_MOCK_API ? (
+              <p className="mt-4 text-center text-xs text-muted-foreground">
+                Static deploy mode: menu, orders, and reviews are saved in this browser only.
+              </p>
+            ) : null}
           </CardContent>
         </Card>
       </div>
@@ -75,6 +81,14 @@ export default function Admin() {
         <h1 className="font-serif text-4xl font-bold">Admin Dashboard</h1>
         <Button variant="outline" onClick={handleLogout}>Logout</Button>
       </div>
+
+      {USE_MOCK_API ? (
+        <Card className="mb-8 border-dashed bg-muted/30">
+          <CardContent className="pt-6 text-sm text-muted-foreground">
+            Static deploy mode is active. Menu edits, orders, and reviews persist in this browser's local storage so the site can run on Netlify without a paid backend.
+          </CardContent>
+        </Card>
+      ) : null}
 
       <Tabs defaultValue="orders">
         <TabsList className="mb-8">
@@ -280,7 +294,7 @@ function MenuTab() {
   const { data: items, isLoading } = useListMenu();
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  
+
   const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
