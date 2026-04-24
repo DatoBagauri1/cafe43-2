@@ -1,0 +1,140 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "K3JaasPx_hcYTyEy3fqc0"
+uri = "file://attached_assets/stock_images/cake_pavlova.jpg"
+type = "image"
+title = "berry pavlova dessert with strawberries and raspberries on white plate, elegant patisserie"
+
+[[outputs]]
+id = "yMRNwKYq1NphxS9HqI6C4"
+uri = "file://attached_assets/stock_images/cake_medovik.jpg"
+type = "image"
+title = "honey cake medovik slice on rustic plate with caramel sauce"
+
+[[outputs]]
+id = "Y0i0u9pOruHMz3Xcd9ab4"
+uri = "file://attached_assets/stock_images/pastry_croissant.jpg"
+type = "image"
+title = "buttery flaky croissant on linen with golden flakes, french bakery"
+
+[[outputs]]
+id = "QAECW7Vre282iFIBtnx6K"
+uri = "file://attached_assets/stock_images/pastry_painchoc.jpg"
+type = "image"
+title = "pain au chocolat fresh from oven with melted dark chocolate"
+
+[[outputs]]
+id = "dVyCPssRKWS6S6zhiS6gX"
+uri = "file://attached_assets/stock_images/pastry_macarons.jpg"
+type = "image"
+title = "raspberry french macarons on a marble plate, pastel pink, beautiful arrangement"
+
+[[outputs]]
+id = "mJ49DIpjzFdMc7j7-4CkJ"
+uri = "file://attached_assets/stock_images/pastry_lemontart.jpg"
+type = "image"
+title = "lemon tart with golden brown crust and powdered sugar, slice on plate"
+
+[[outputs]]
+id = "tP74M4OhbTXyIXgCM0ISH"
+uri = "file://attached_assets/stock_images/drink_cappuccino.jpg"
+type = "image"
+title = "cappuccino with detailed latte art on saucer, bright morning light"
+
+[[outputs]]
+id = "a5l5UFhG_Yw19cMaoZ9-G"
+uri = "file://attached_assets/stock_images/drink_espresso.jpg"
+type = "image"
+title = "espresso shot in white cup with crema, dark wooden table, cafe ambiance"
+
+[[outputs]]
+id = "hSaNjouG1FePJOvdt-0xn"
+uri = "file://attached_assets/stock_images/drink_tea.jpg"
+type = "image"
+title = "elegant glass teapot with herbal tea and clear cup, warm light"
+
+[[outputs]]
+id = "c-ErxcHBhE0ST3h9_HlhS"
+uri = "file://attached_assets/stock_images/drink_icedcoffee.jpg"
+type = "image"
+title = "iced coffee in tall glass with cream swirl, summer cafe"
+
+[[outputs]]
+id = "t6F0Z9hLVmlq_iZXORHS5"
+uri = "file://attached_assets/stock_images/choc_truffles.jpg"
+type = "image"
+title = "dark chocolate truffles dusted with cocoa powder, luxury chocolatier"
+
+[[outputs]]
+id = "mN--EVgRPgaH0L1mrCmjp"
+uri = "file://attached_assets/stock_images/choc_strawberry.jpg"
+type = "image"
+title = "chocolate dipped strawberries on slate platter, elegant dessert"
+
+[[outputs]]
+id = "Whtu_ZFwp7H0mJkMD37nZ"
+uri = "file://attached_assets/stock_images/choc_bar.jpg"
+type = "image"
+title = "artisan dark chocolate bar broken into pieces, single origin"
+
+[[outputs]]
+id = "XfqiiTtmBbComm7trUyFR"
+uri = "file://attached_assets/stock_images/choc_pralines.jpg"
+type = "image"
+title = "praline chocolates assortment in elegant box"
+
+[[outputs]]
+id = "VS-OSuvxC1jXT23FGSRSX"
+uri = "file://attached_assets/stock_images/gal_interior1.jpg"
+type = "image"
+title = "interior of cozy european patisserie with glass dessert cases and warm pendant lights"
+
+[[outputs]]
+id = "haa328ZaHZ7L4Mnzf-Bh6"
+uri = "file://attached_assets/stock_images/gal_macarondisplay.jpg"
+type = "image"
+title = "assortment of colorful french macarons in window display"
+
+[[outputs]]
+id = "_tKU3BY5YKeAdYuk222Td"
+uri = "file://attached_assets/stock_images/gal_barista.jpg"
+type = "image"
+title = "barista hands pouring espresso, rustic cafe wood counter"
+
+[[outputs]]
+id = "ev-7kVC1qgXS6H3aW7Mvd"
+uri = "file://attached_assets/stock_images/gal_chef.jpg"
+type = "image"
+title = "pastry chef carefully decorating a chocolate cake with piping bag"
+
+[[outputs]]
+id = "yGY4NKoTnGTVNU2LA_wHL"
+uri = "file://attached_assets/stock_images/gal_morning.jpg"
+type = "image"
+title = "morning coffee and croissant on small marble cafe table by window"
+
+[[outputs]]
+id = "ZWaq5tLG0YWBVUODRj6zv"
+uri = "file://attached_assets/stock_images/gal_outdoor.jpg"
+type = "image"
+title = "outdoor cafe seating with small wood tables and string lights tbilisi style"
+
+[[outputs]]
+id = "fZ6AnqShfURCckJHtt_55"
+uri = "file://attached_assets/stock_images/gal_tarts.jpg"
+type = "image"
+title = "neat row of fresh fruit tarts in a bakery display case"
+
+[[outputs]]
+id = "mKu4yIHoT05K4g5sv1l0m"
+uri = "file://attached_assets/stock_images/gal_couple.jpg"
+type = "image"
+title = "couple enjoying coffee and dessert in a warm patisserie"
+
+[[outputs]]
+id = "quqRMZkRnELS_aBo6pqmB"
+uri = "file://attached_assets/stock_images/cake_chocolate.jpg"
+type = "image"
+title = "rich chocolate fudge layer cake slice on white plate, dripping ganache, intimate cafe lighting"

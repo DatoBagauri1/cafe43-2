@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "CAFE 43"
+version = "1.0.0"
+id = "artifacts/cafe43"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18414
+
+[services.development]
+run = "pnpm --filter @workspace/cafe43 run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/cafe43", "run", "build" ]
+publicDir = "artifacts/cafe43/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18414"
+BASE_PATH = "/"

@@ -1,0 +1,90 @@
+Create a fully responsive, dynamic website for a pastry shop named “CAFE 43” based on the following real-world business data.
+
+GENERAL REQUIREMENTS
+
+Use modern full-stack architecture
+Frontend: React (with Next.js preferred)
+Backend: Node.js with Express (or Next.js API routes)
+Database: PostgreSQL or MongoDB
+Styling: Tailwind CSS
+Ensure mobile-first responsive design
+SEO optimized
+Clean, minimal, elegant dessert-themed UI (light colors, soft shadows, warm tones)
+
+CORE FEATURES
+
+HOME PAGE
+Hero section with large banner image of desserts
+Business name: “CAFE 43”
+Tagline: premium pastry & dessert shop
+Quick info: rating (4.6), review count (77), location (Tbilisi)
+CTA buttons: “View Menu”, “Order Now”
+ABOUT SECTION
+Description of pastry shop
+Highlight specialties: desserts, chocolate, coffee, tea
+Show “Updated 3 weeks ago”
+MENU PAGE (DYNAMIC)
+Fetch menu items from backend/database
+Categories: cakes, pastries, drinks, chocolate
+Each item includes:
+name
+description
+price
+image
+Add filtering by category
+Add search functionality
+REVIEWS SYSTEM (DYNAMIC)
+Display existing reviews with:
+username
+rating
+text
+date
+Show average rating (4.6)
+Allow users to submit new reviews
+Store reviews in database
+GALLERY
+Grid layout of images (food, drinks, atmosphere)
+Lightbox preview on click
+CONTACT & LOCATION
+Address: 189 David Agmashenebeli Ave, Tbilisi
+Embedded Google Map
+Phone number
+“Get Directions” button
+ORDER SYSTEM (DYNAMIC)
+Add-to-cart functionality
+Cart page
+Checkout form (name, phone, address)
+Store orders in backend
+ADMIN PANEL (BASIC)
+Login authentication
+Add/edit/delete menu items
+Manage reviews
+View orders
+
+UI/UX DETAILS
+
+Smooth animations (Framer Motion)
+Hover effects on cards
+Skeleton loading states
+Dark mode toggle
+
+TECHNICAL DETAILS
+
+Use REST API or GraphQL
+Implement form validation
+Use environment variables
+Optimize images
+Lazy loading for performance
+
+EXTRA FEATURES
+
+Multi-language support (English + Georgian)
+Favorite/save items feature
+“Open/Closed” status based on time (opens 10 AM)
+
+DELIVERABLE
+
+Production-ready codebase
+Well-structured folders
+Clean reusable components
+README with setup instructions

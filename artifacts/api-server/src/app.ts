@@ -1,8 +1,15 @@
 import express, { type Express } from "express";
 import cors from "cors";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./lib/logger";
+import { errorHandler } from "./middlewares/errorHandler";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const assetsDir = path.resolve(__dirname, "..", "..", "..", "attached_assets", "stock_images");
 
 const app: Express = express();
 
@@ -29,6 +36,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/assets", express.static(assetsDir, { fallthrough: true, maxAge: "1d" }));
+
 app.use("/api", router);
+
+app.use(errorHandler);
 
 export default app;

@@ -3,20 +3,29 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: CAFE 43 pastry shop API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: menu
+    description: Menu items
+  - name: reviews
+    description: Customer reviews
+  - name: orders
+    description: Customer orders
+  - name: gallery
+    description: Gallery photos
+  - name: meta
+    description: Shop info / wow endpoints
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +33,241 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /menu:
+    get:
+      operationId: listMenu
+      tags: [menu]
+      summary: List menu items
+      parameters:
+        - in: query
+          name: category
+          required: false
+          schema:
+            $ref: "#/components/schemas/Category"
+        - in: query
+          name: search
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Menu items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MenuItem"
+    post:
+      operationId: createMenuItem
+      tags: [menu]
+      summary: Create menu item (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMenuItemBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuItem"
+
+  /menu/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+    get:
+      operationId: getMenuItem
+      tags: [menu]
+      summary: Get a single menu item
+      responses:
+        "200":
+          description: Item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuItem"
+    patch:
+      operationId: updateMenuItem
+      tags: [menu]
+      summary: Update menu item (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMenuItemBody"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuItem"
+    delete:
+      operationId: deleteMenuItem
+      tags: [menu]
+      summary: Delete menu item (admin)
+      responses:
+        "204":
+          description: Deleted
+
+  /menu/featured:
+    get:
+      operationId: listFeaturedMenu
+      tags: [menu]
+      summary: Featured / top items for the home page
+      responses:
+        "200":
+          description: Featured items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MenuItem"
+
+  /menu/categories:
+    get:
+      operationId: listCategoriesSummary
+      tags: [menu]
+      summary: Category counts and example item per category
+      responses:
+        "200":
+          description: Category summaries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CategorySummary"
+
+  /reviews:
+    get:
+      operationId: listReviews
+      tags: [reviews]
+      summary: List reviews
+      responses:
+        "200":
+          description: Reviews
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Review"
+    post:
+      operationId: createReview
+      tags: [reviews]
+      summary: Submit a review
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateReviewBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Review"
+
+  /reviews/summary:
+    get:
+      operationId: getReviewSummary
+      tags: [reviews]
+      summary: Average rating and review count
+      responses:
+        "200":
+          description: Summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReviewSummary"
+
+  /gallery:
+    get:
+      operationId: listGallery
+      tags: [gallery]
+      summary: List gallery images
+      responses:
+        "200":
+          description: Photos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GalleryPhoto"
+
+  /orders:
+    get:
+      operationId: listOrders
+      tags: [orders]
+      summary: List recent orders (admin)
+      responses:
+        "200":
+          description: Orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+    post:
+      operationId: createOrder
+      tags: [orders]
+      summary: Place an order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrderBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+
+  /shop/status:
+    get:
+      operationId: getShopStatus
+      tags: [meta]
+      summary: Open/closed status with next opening time
+      responses:
+        "200":
+          description: Status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShopStatus"
+
+  /shop/info:
+    get:
+      operationId: getShopInfo
+      tags: [meta]
+      summary: Shop name, address, contact, hours
+      responses:
+        "200":
+          description: Shop info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShopInfo"
+
 components:
   schemas:
     HealthStatus:
@@ -31,6 +275,255 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    Category:
+      type: string
+      enum: [cakes, pastries, drinks, chocolate]
+
+    MenuItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        nameKa:
+          type: string
+        description:
+          type: string
+        descriptionKa:
+          type: string
+        price:
+          type: number
+        category:
+          $ref: "#/components/schemas/Category"
+        imageUrl:
+          type: string
+        featured:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, name, nameKa, description, descriptionKa, price, category, imageUrl, featured, createdAt]
+
+    CreateMenuItemBody:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        nameKa:
+          type: string
+          minLength: 1
+        description:
+          type: string
+        descriptionKa:
+          type: string
+        price:
+          type: number
+          minimum: 0
+        category:
+          $ref: "#/components/schemas/Category"
+        imageUrl:
+          type: string
+        featured:
+          type: boolean
+      required: [name, nameKa, description, descriptionKa, price, category, imageUrl]
+
+    UpdateMenuItemBody:
+      type: object
+      properties:
+        name:
+          type: string
+        nameKa:
+          type: string
+        description:
+          type: string
+        descriptionKa:
+          type: string
+        price:
+          type: number
+        category:
+          $ref: "#/components/schemas/Category"
+        imageUrl:
+          type: string
+        featured:
+          type: boolean
+
+    CategorySummary:
+      type: object
+      properties:
+        category:
+          $ref: "#/components/schemas/Category"
+        count:
+          type: integer
+        sampleImageUrl:
+          type: string
+      required: [category, count, sampleImageUrl]
+
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        text:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, username, rating, text, createdAt]
+
+    CreateReviewBody:
+      type: object
+      properties:
+        username:
+          type: string
+          minLength: 1
+          maxLength: 60
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        text:
+          type: string
+          minLength: 1
+          maxLength: 1000
+      required: [username, rating, text]
+
+    ReviewSummary:
+      type: object
+      properties:
+        averageRating:
+          type: number
+        count:
+          type: integer
+      required: [averageRating, count]
+
+    GalleryPhoto:
+      type: object
+      properties:
+        id:
+          type: integer
+        imageUrl:
+          type: string
+        caption:
+          type: string
+      required: [id, imageUrl, caption]
+
+    OrderItemInput:
+      type: object
+      properties:
+        menuItemId:
+          type: integer
+        quantity:
+          type: integer
+          minimum: 1
+      required: [menuItemId, quantity]
+
+    OrderItem:
+      type: object
+      properties:
+        menuItemId:
+          type: integer
+        name:
+          type: string
+        unitPrice:
+          type: number
+        quantity:
+          type: integer
+      required: [menuItemId, name, unitPrice, quantity]
+
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+        customerName:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        notes:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+        total:
+          type: number
+        status:
+          type: string
+          enum: [pending, confirmed, ready, delivered, cancelled]
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, customerName, phone, address, notes, items, total, status, createdAt]
+
+    CreateOrderBody:
+      type: object
+      properties:
+        customerName:
+          type: string
+          minLength: 1
+        phone:
+          type: string
+          minLength: 4
+        address:
+          type: string
+          minLength: 1
+        notes:
+          type: string
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/OrderItemInput"
+      required: [customerName, phone, address, items]
+
+    ShopStatus:
+      type: object
+      properties:
+        isOpen:
+          type: boolean
+        opensAt:
+          type: string
+        closesAt:
+          type: string
+        currentLocalTime:
+          type: string
+      required: [isOpen, opensAt, closesAt, currentLocalTime]
+
+    ShopInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        tagline:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        rating:
+          type: number
+        reviewCount:
+          type: integer
+        latitude:
+          type: number
+        longitude:
+          type: number
+        hours:
+          type: string
+      required: [name, tagline, address, city, phone, email, rating, reviewCount, latitude, longitude, hours]
