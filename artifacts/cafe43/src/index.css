@@ -46,6 +46,7 @@
 }
 
 :root {
+  color-scheme: light;
   /* Cream background */
   --background: 45 30% 97%;
   /* Dark chocolate text */
@@ -98,47 +99,48 @@
 }
 
 .dark {
-  /* Dark brown background */
-  --background: 22 33% 10%;
-  /* Cream text */
-  --foreground: 45 30% 92%;
-  /* Darker border */
-  --border: 22 25% 18%;
+  color-scheme: dark;
+  /* Espresso noir background */
+  --background: 24 22% 7%;
+  /* Warm ivory text */
+  --foreground: 40 33% 93%;
+  /* Soft bronze border */
+  --border: 24 16% 24%;
 
-  --card: 22 30% 12%;
-  --card-foreground: 45 30% 92%;
-  --card-border: 22 25% 18%;
+  --card: 24 18% 11%;
+  --card-foreground: 40 33% 93%;
+  --card-border: 24 16% 24%;
 
-  --sidebar: 22 30% 12%;
-  --sidebar-foreground: 45 30% 92%;
-  --sidebar-border: 22 25% 18%;
-  --sidebar-primary: 28 55% 53%;
+  --sidebar: 24 18% 10%;
+  --sidebar-foreground: 40 33% 93%;
+  --sidebar-border: 24 16% 24%;
+  --sidebar-primary: 31 68% 58%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 22 25% 18%;
+  --sidebar-accent: 24 14% 18%;
   --sidebar-accent-foreground: 45 30% 92%;
-  --sidebar-ring: 28 55% 53%;
+  --sidebar-ring: 31 68% 58%;
 
-  --popover: 22 30% 12%;
+  --popover: 24 18% 12%;
   --popover-foreground: 45 30% 92%;
-  --popover-border: 22 25% 18%;
+  --popover-border: 24 16% 24%;
 
-  --primary: 28 60% 50%;
-  --primary-foreground: 0 0% 100%;
+  --primary: 31 68% 58%;
+  --primary-foreground: 24 22% 8%;
 
-  --secondary: 104 16% 48%;
-  --secondary-foreground: 0 0% 100%;
+  --secondary: 150 15% 36%;
+  --secondary-foreground: 40 33% 95%;
 
-  --muted: 22 25% 16%;
-  --muted-foreground: 45 20% 70%;
+  --muted: 24 14% 15%;
+  --muted-foreground: 38 18% 72%;
 
-  --accent: 22 25% 16%;
+  --accent: 24 14% 18%;
   --accent-foreground: 45 30% 92%;
 
-  --destructive: 0 62% 30%;
+  --destructive: 0 58% 42%;
   --destructive-foreground: 0 0% 100%;
 
-  --input: 22 25% 20%;
-  --ring: 28 60% 50%;
+  --input: 24 14% 19%;
+  --ring: 31 68% 58%;
 }
 
 @layer base {
@@ -148,6 +150,14 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground transition-colors duration-300;
+  }
+
+  .dark body {
+    background-image:
+      radial-gradient(circle at top, rgba(201, 133, 67, 0.16), transparent 32%),
+      radial-gradient(circle at 85% 12%, rgba(104, 140, 124, 0.12), transparent 26%),
+      linear-gradient(180deg, rgba(22, 16, 13, 0.92), rgba(15, 11, 9, 0.98));
+    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -180,6 +190,10 @@
 
   .scrollbar-thin {
     scrollbar-width: thin;
+  }
+
+  .dark .scrollbar-thin {
+    scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
   }
 
   .no-scrollbar::-webkit-scrollbar { display: none; }

@@ -21,14 +21,15 @@ export default function Home() {
     <div className="flex flex-col">
       {/* Hero */}
       <section className="relative min-h-[80vh] flex items-center justify-center bg-card overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-20 dark:opacity-10 pointer-events-none bg-[url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2047&auto=format&fit=crop')] bg-cover bg-center mix-blend-multiply" />
+        <div className="absolute inset-0 z-0 pointer-events-none bg-[url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2047&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-multiply dark:opacity-50 dark:mix-blend-normal dark:scale-[1.03]" />
+        <div className="absolute inset-0 z-0 pointer-events-none bg-[linear-gradient(180deg,rgba(251,247,242,0.78),rgba(250,245,239,0.88))] dark:bg-[radial-gradient(circle_at_top,rgba(201,133,67,0.14),transparent_34%),linear-gradient(180deg,rgba(12,10,8,0.32),rgba(12,10,8,0.76))]" />
         <div className="container mx-auto px-4 z-10 text-center flex flex-col items-center">
           <h1 className="font-serif text-5xl md:text-7xl font-bold tracking-tight mb-4">CAFE 43</h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl">
             {info?.tagline || "Handcrafted cakes, French pastries, and fine coffee in the heart of Tbilisi."}
           </p>
           
-          <div className="flex items-center gap-2 mb-8 bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full border shadow-sm">
+          <div className="flex items-center gap-2 mb-8 bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full border shadow-sm dark:border-white/10 dark:bg-[rgba(12,10,8,0.55)]">
             <Star className="h-5 w-5 fill-primary text-primary" />
             <span className="font-bold">{summary?.averageRating.toFixed(1) || "4.6"}</span>
             <span className="text-muted-foreground text-sm">/ 5 from {summary?.count || 77}+ reviews</span>
@@ -96,9 +97,9 @@ export default function Home() {
                   <img 
                     src={c.sampleImageUrl} 
                     alt={c.category} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 dark:[filter:brightness(1.06)_contrast(1.08)_saturate(1.08)]"
                   />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center dark:bg-black/18 dark:group-hover:bg-black/30">
                     <h3 className="font-serif text-2xl font-bold text-white capitalize tracking-wide">
                       {c.category}
                     </h3>
@@ -137,7 +138,7 @@ export default function Home() {
                 <img 
                   src={photo.imageUrl} 
                   alt={photo.caption} 
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 dark:[filter:brightness(1.07)_contrast(1.08)_saturate(1.08)]" 
                 />
               </div>
             ))}

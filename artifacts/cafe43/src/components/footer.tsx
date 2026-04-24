@@ -4,7 +4,7 @@ export function Footer() {
   const { t } = useLang();
 
   return (
-    <footer className="border-t bg-card mt-auto">
+    <footer className="border-t bg-card mt-auto dark:border-white/10 dark:bg-[rgba(255,255,255,0.02)]">
       <div className="container mx-auto px-4 py-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
         <div>
           <h2 className="font-serif text-2xl font-bold mb-4">CAFE 43</h2>

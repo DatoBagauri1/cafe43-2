@@ -28,7 +28,7 @@ export function Header() {
   const closeMobile = () => setOpen(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-md dark:border-white/10 dark:bg-[rgba(13,10,8,0.72)]">
       <div className="container mx-auto flex h-16 items-center justify-between gap-3 px-4">
         <div className="flex items-center gap-8">
           <Link

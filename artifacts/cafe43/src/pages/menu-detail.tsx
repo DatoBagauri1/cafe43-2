@@ -82,11 +82,11 @@ export default function MenuDetail() {
       </Link>
 
       <div className="grid md:grid-cols-2 gap-12 items-start">
-        <div className="aspect-square rounded-2xl overflow-hidden bg-muted">
+        <div className="aspect-square rounded-2xl overflow-hidden bg-muted dark:bg-[rgba(255,255,255,0.04)] dark:ring-1 dark:ring-white/10 dark:shadow-[0_28px_80px_-38px_rgba(0,0,0,0.92)]">
           <img 
             src={item.imageUrl} 
             alt={name} 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover dark:[filter:brightness(1.08)_contrast(1.08)_saturate(1.08)]"
           />
         </div>
         

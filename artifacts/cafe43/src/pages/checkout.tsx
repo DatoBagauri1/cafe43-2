@@ -224,11 +224,11 @@ export default function Checkout() {
               <div className="space-y-4 max-h-72 overflow-y-auto pr-2 -mr-2 scrollbar-thin">
                 {items.map((item) => (
                   <div key={item.menuItemId} className="flex items-start gap-3">
-                    <div className="w-14 h-14 bg-muted rounded-md overflow-hidden shrink-0">
+                    <div className="w-14 h-14 bg-muted rounded-md overflow-hidden shrink-0 dark:bg-[rgba(255,255,255,0.04)] dark:ring-1 dark:ring-white/10">
                       <img
                         src={item.imageUrl}
                         alt={item.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover dark:[filter:brightness(1.08)_contrast(1.08)_saturate(1.08)]"
                       />
                     </div>
                     <div className="flex-1 min-w-0">

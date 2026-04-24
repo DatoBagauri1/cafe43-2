@@ -37,11 +37,11 @@ export default function Cart() {
           {items.map((item) => (
             <Card key={item.menuItemId} className="overflow-hidden">
               <CardContent className="p-0 flex flex-col sm:flex-row">
-                <div className="w-full sm:w-32 aspect-square sm:aspect-auto bg-muted shrink-0">
+                <div className="w-full sm:w-32 aspect-square sm:aspect-auto bg-muted shrink-0 dark:bg-[rgba(255,255,255,0.04)] dark:border-r dark:border-white/10">
                   <img 
                     src={item.imageUrl} 
                     alt={item.name} 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover dark:[filter:brightness(1.08)_contrast(1.08)_saturate(1.08)]"
                   />
                 </div>
                 <div className="p-4 flex-1 flex flex-col justify-between">

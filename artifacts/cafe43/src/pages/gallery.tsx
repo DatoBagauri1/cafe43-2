@@ -27,16 +27,16 @@ export default function Gallery() {
           gallery?.map((photo) => (
             <div 
               key={photo.id} 
-              className="group aspect-square rounded-xl overflow-hidden cursor-pointer relative bg-muted"
+              className="group aspect-square rounded-xl overflow-hidden cursor-pointer relative bg-muted dark:bg-[rgba(255,255,255,0.04)] dark:ring-1 dark:ring-white/10 dark:shadow-[0_24px_60px_-34px_rgba(0,0,0,0.9)]"
               onClick={() => setSelectedPhoto(photo.imageUrl)}
             >
               <img 
                 src={photo.imageUrl} 
                 alt={photo.caption} 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 dark:[filter:brightness(1.08)_contrast(1.08)_saturate(1.1)]"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 dark:bg-black/8 dark:group-hover:bg-black/18" />
             </div>
           ))
         )}
@@ -52,7 +52,7 @@ export default function Gallery() {
             <img 
               src={selectedPhoto} 
               alt="Gallery Preview" 
-              className="w-full h-auto max-h-[90vh] object-contain rounded-md"
+              className="w-full h-auto max-h-[90vh] object-contain rounded-md dark:rounded-xl dark:ring-1 dark:ring-white/12 dark:shadow-[0_28px_80px_-36px_rgba(0,0,0,0.95)]"
             />
           )}
         </DialogContent>

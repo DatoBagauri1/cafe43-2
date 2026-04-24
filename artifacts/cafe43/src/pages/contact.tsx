@@ -86,7 +86,7 @@ export default function Contact() {
           </Card>
         </div>
         
-        <div className="aspect-[4/5] lg:aspect-auto lg:h-[700px] rounded-2xl overflow-hidden shadow-lg border bg-muted">
+        <div className="aspect-[4/5] lg:aspect-auto lg:h-[700px] rounded-2xl overflow-hidden shadow-lg border bg-muted dark:border-white/10 dark:bg-[rgba(255,255,255,0.04)] dark:shadow-[0_28px_80px_-38px_rgba(0,0,0,0.92)]">
           <iframe
             src="https://www.google.com/maps?q=189+David+Agmashenebeli+Ave+Tbilisi&output=embed"
             width="100%"

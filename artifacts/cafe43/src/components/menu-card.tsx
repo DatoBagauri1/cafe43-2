@@ -33,14 +33,15 @@ export function MenuCard({ item }: { item: MenuItem }) {
 
   return (
     <Link href={`/menu/${item.id}`}>
-      <Card className="overflow-hidden group cursor-pointer transition-all hover:shadow-md hover:-translate-y-1">
-        <div className="aspect-[4/3] overflow-hidden relative bg-muted">
+      <Card className="overflow-hidden group cursor-pointer transition-all hover:shadow-md hover:-translate-y-1 dark:hover:shadow-[0_26px_70px_-34px_rgba(0,0,0,0.95)]">
+        <div className="aspect-[4/3] overflow-hidden relative bg-muted dark:bg-[rgba(255,255,255,0.04)] dark:ring-1 dark:ring-white/10">
           <img 
             src={item.imageUrl} 
             alt={name} 
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 dark:[filter:brightness(1.07)_contrast(1.08)_saturate(1.08)]"
             loading="lazy"
           />
+          <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity dark:opacity-100 bg-[linear-gradient(180deg,rgba(13,10,8,0),rgba(13,10,8,0.2))]" />
         </div>
         <CardContent className="p-4">
           <div className="flex justify-between items-start gap-2 mb-2">
